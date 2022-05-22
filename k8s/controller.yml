@@ -1,0 +1,23 @@
+# https://kubernetes.io/docs/concepts/services-networking/ingress/#the-ingress-resource
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: spring-boot-hello-world-controller
+  namespace: default
+  annotations:
+    # https://kubernetes.github.io/ingress-nginx/examples/rewrite/
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: demo.localdev.me
+    http:
+      paths:
+      - path: /spring-boot-hello-world
+        pathType: Prefix
+        backend:
+          service:
+            name: spring-boot-hello-world
+            port:
+              number: 8080
